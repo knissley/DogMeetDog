@@ -3,22 +3,20 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createContext, useState } from 'react';
+import { UserInfoContext } from './app/context/userInfoContext';
 
 // const Stack = createNativeStackNavigator();
 
-export const UserContext = createContext('');
-
 export default function App() {
-  let globalEmail = '';
-  const setGlobalEmail = (email: string) => {
-    globalEmail = email;
-  }
+  const [globalEmail, setGlobalEmail] = useState('');
+
+  console.log('global email in app: ', globalEmail);
 
   return (
     <>
-      <UserContext.Provider value={globalEmail}>
-        <WelcomeScreen setGlobalEmail={setGlobalEmail} />
-      </UserContext.Provider>
+      <UserInfoContext.Provider value={{ globalEmail, setGlobalEmail }} >
+        <WelcomeScreen />
+      </UserInfoContext.Provider>
     </>
   );
 }
