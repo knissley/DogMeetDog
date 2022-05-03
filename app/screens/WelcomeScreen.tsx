@@ -18,7 +18,9 @@ const WelcomeScreen = () => {
 
   const handleLogin = () => {
     loginUser(auth, email, password)
-      .then(cred => setLoginErrorMsg(''))
+      .then(() => {
+        setLoginErrorMsg('');
+      })
       .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
   }
 
@@ -81,6 +83,7 @@ const WelcomeScreen = () => {
                     Login
                   </Text>
                 </TouchableOpacity>
+                <Text style={styles.signUpLabel}>Don't have an account?</Text>
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={.65}
@@ -187,7 +190,11 @@ const styles = StyleSheet.create({
     bottom: -35,
     left: 12,
     fontSize: 12,
+  },
+  signUpLabel: {
+    color: '#FB9114',
+    fontSize: 12,
   }
-})
+});
 
 export default WelcomeScreen;
