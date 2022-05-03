@@ -14,11 +14,29 @@ const WelcomeScreen = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginErrorMsg, setLoginErrorMsg] = useState('');
 
   const handleLogin = () => {
     loginUser(auth, email, password)
-      .then(cred => console.log(cred))
-      .catch(err => console.log(err.message));
+      .then(cred => setLoginErrorMsg(''))
+      .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
+  }
+
+  const getMessageFromErrorCode = (err: string) => {
+    let errorCode = err.toString().split('/')[1];
+    errorCode = errorCode.split(')')[0];
+    console.log(errorCode);
+
+    switch (errorCode) {
+      case "invalid-email":
+        return "Invalid email, please try again."
+      case "user-not-found":
+        return "That email was not found, please try again."
+      case "wrong-password":
+        return "Incorrect password, please try again."
+      default:
+        return "There was an error logging in, please try again."
+    }
   }
 
   return (
@@ -51,6 +69,7 @@ const WelcomeScreen = () => {
                     onChangeText={setPassword}
                   ></TextInput>
                 </View>
+                <Text style={styles.errorMsg}>{loginErrorMsg}</Text>
               </View>
               <View style={styles.buttonsContainer}>
                 <TouchableOpacity
@@ -162,6 +181,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
   },
+  errorMsg: {
+    color: '#FB9114',
+    position: "absolute",
+    bottom: -35,
+    left: 12,
+    fontSize: 12,
+  }
 })
 
 export default WelcomeScreen;
