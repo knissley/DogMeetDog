@@ -5,7 +5,7 @@ const controllers = require('./controllers');
 
 app.use(express.json());
 
-
+app.get('/:user_id/', controllers.users.getAll);
 
 
 
