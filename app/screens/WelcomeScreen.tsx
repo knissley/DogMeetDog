@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useFonts } from "expo-font";
 import { auth, loginUser } from "../../firebase";
+import { UserContext } from "../../App";
 import axios from "axios";
 
 
-const WelcomeScreen = () => {
+const WelcomeScreen = (props) => {
   const [fontLoaded] = useFonts({
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
     IndieFlower: require('../assets/fonts/IndieFlower.ttf'),
@@ -16,6 +17,9 @@ const WelcomeScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginErrorMsg, setLoginErrorMsg] = useState('');
+  const userEmail = useContext(UserContext);
+  console.log(userEmail);
+
 
   const handleLogin = () => {
     loginUser(auth, email, password)
