@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useFonts } from "expo-font";
+import { auth, loginUser } from "../../firebase";
 
 
 const WelcomeScreen = () => {
@@ -14,6 +15,12 @@ const WelcomeScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleLogin = () => {
+    loginUser(auth, email, password)
+      .then(cred => console.log(cred))
+      .catch(err => console.log(err.message));
+  }
+
   return (
     fontLoaded
       ? (<>
@@ -22,7 +29,7 @@ const WelcomeScreen = () => {
           onPress={Keyboard.dismiss}>
           <ImageBackground
             style={styles.background}
-            source={require('../assets/welcome-bg.jpg')}>
+            source={require('../assets/images/welcome-bg.jpg')}>
             <View style={styles.welcomeScreenContainer}>
               <View style={styles.logoContainer}>
                 <Text style={styles.logo}>DogMeetDog</Text>
@@ -49,6 +56,7 @@ const WelcomeScreen = () => {
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={.65}
+                  onPress={handleLogin}
                 >
                   <Text style={styles.buttonText}>
                     Login
@@ -59,7 +67,7 @@ const WelcomeScreen = () => {
                   activeOpacity={.65}
                 >
                   <Text style={styles.buttonText}>
-                    Register
+                    Sign Up
                   </Text>
                 </TouchableOpacity>
               </View>
