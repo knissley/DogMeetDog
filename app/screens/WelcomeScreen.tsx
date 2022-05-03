@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useFonts } from "expo-font";
 import { auth, loginUser } from "../../firebase";
+import axios from "axios";
 
 
 const WelcomeScreen = () => {
