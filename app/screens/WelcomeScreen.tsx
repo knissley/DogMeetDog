@@ -3,6 +3,7 @@ import { ImageBackground, StyleSheet, View, Text, TextInput, TouchableOpacity, T
 import { useFonts } from "expo-font";
 import { auth, loginUser } from "../../firebase";
 import { UserInfoContext } from "../context/userInfoContext";
+import axios from "axios";
 
 
 const WelcomeScreen = () => {
@@ -17,14 +18,23 @@ const WelcomeScreen = () => {
   const [password, setPassword] = useState('');
   const [loginErrorMsg, setLoginErrorMsg] = useState('');
 
-  const { setGlobalEmail } = useContext(UserInfoContext);
+  const { setUserInfo } = useContext(UserInfoContext);
 
 
   const handleLogin = () => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
-        setGlobalEmail(email);
+        axios.get(`http://localhost:3500/users/${email}`)
+          .then((res) => {
+            const id = res.data.id;
+            const name = res.data.name;
+            setUserInfo((prevState) => {
+              prevState = { ...prevState, email, id, name }
+            })
+          })
+          .catch((err) => console.log('Error retrieving user info: ', err));
+        //navigate to another page
       })
       .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
   }
