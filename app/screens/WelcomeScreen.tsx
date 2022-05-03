@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useFonts } from "expo-font";
 import { auth, loginUser } from "../../firebase";
+import { UserInfoContext } from "../context/userInfoContext";
 import axios from "axios";
 
 
@@ -16,11 +17,27 @@ const WelcomeScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginErrorMsg, setLoginErrorMsg] = useState('');
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
 
   const handleLogin = () => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
+        axios.get(`http://localhost:3500/users/${userInfo.email}`)
+          .then((res) => {
+            const id = res.data.id;
+            const name = res.data.name;
+            let isLoggedIn = true;
+            setUserInfo({
+              ...userInfo,
+              email,
+              id,
+              name,
+              isLoggedIn,
+            })
+          })
+        //navigate to another page
       })
       .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
   }
