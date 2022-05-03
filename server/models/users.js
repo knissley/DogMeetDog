@@ -5,7 +5,7 @@ module.exports = {
     const queryString = `
     SELECT *
     FROM Users
-    WHERE email = ${userEmail}`;
+    WHERE email = '${userEmail}'`;
 
     db.query(queryString)
       .then(res => callback(null, res.rows[0]))

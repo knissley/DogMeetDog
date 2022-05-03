@@ -4,7 +4,6 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createContext, useEffect, useState } from 'react';
 import { UserInfoContext } from './app/context/userInfoContext';
-import axios from 'axios';
 
 // const Stack = createNativeStackNavigator();
 
@@ -14,6 +13,7 @@ export default function App() {
   return (
     <>
       <UserInfoContext.Provider value={{ userInfo, setUserInfo }} >
+        {userInfo?.isLoggedIn ? console.log('logged in') : console.log('not logged in')}
         <WelcomeScreen />
       </UserInfoContext.Provider>
     </>

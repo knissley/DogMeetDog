@@ -17,23 +17,26 @@ const WelcomeScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginErrorMsg, setLoginErrorMsg] = useState('');
-
-  const { setUserInfo } = useContext(UserInfoContext);
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
 
   const handleLogin = () => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
-        axios.get(`http://localhost:3500/users/${email}`)
+        axios.get(`http://localhost:3500/users/${userInfo.email}`)
           .then((res) => {
             const id = res.data.id;
             const name = res.data.name;
-            setUserInfo((prevState) => {
-              prevState = { ...prevState, email, id, name }
+            let isLoggedIn = true;
+            setUserInfo({
+              ...userInfo,
+              email,
+              id,
+              name,
+              isLoggedIn,
             })
           })
-          .catch((err) => console.log('Error retrieving user info: ', err));
         //navigate to another page
       })
       .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
