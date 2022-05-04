@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { auth, loginUser } from "../../firebase";
 import { UserInfoContext } from "../context/userInfoContext";
 import axios from "axios";
+import { LOCAL_IP } from "../../config";
 
 const getMessageFromErrorCode = (err: string) => {
   let errorCode = err.toString().split('/')[1];
@@ -22,7 +23,7 @@ const getMessageFromErrorCode = (err: string) => {
 };
 
 
-const Welcome = () => {
+const Welcome = ({ navigation }) => {
   const [fontLoaded] = useFonts({
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
     IndieFlower: require('../assets/fonts/IndieFlower.ttf'),
@@ -40,7 +41,7 @@ const Welcome = () => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
-        axios.get(`http://localhost:3500/users/${userInfo.email}`)
+        axios.get(`http://${LOCAL_IP}/users/${email}`)
           .then((res) => {
             const id = res.data.id;
             const name = res.data.name;
@@ -52,6 +53,7 @@ const Welcome = () => {
               name,
               isLoggedIn,
             })
+            console.log('success');
           })
           .catch((err) => console.log('Error getting user info: ', err));
       })
@@ -107,9 +109,10 @@ const Welcome = () => {
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={.65}
+                  onPress={() => navigation.navigate('Register')}
                 >
                   <Text style={styles.buttonText}>
-                    Sign Up
+                    Register
                   </Text>
                 </TouchableOpacity>
               </View>

@@ -34,7 +34,6 @@ const Register = () => {
     fontLoaded
       ? (
         <>
-          <View style={styles.header}/>
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
           >
@@ -43,7 +42,7 @@ const Register = () => {
                 contentContainerStyle={styles.contentContainer}
                 showsVerticalScrollIndicator={false}
               >
-                <Text style={styles.h1}>Sign Up</Text>
+                {/* <Text style={styles.h1}>Sign Up</Text> */}
                 <Text style={styles.pageText}>What's your name?</Text>
                 <View style={styles.inputContainer}>
                   <TextInput
@@ -172,7 +171,6 @@ const Register = () => {
               </ScrollView>
             </View>
           </TouchableWithoutFeedback>
-          <View style={styles.footer} />
         </>)
       : null
   );
@@ -186,22 +184,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
   },
-  header: {
-    height: 45,
-    width: '100%',
-    backgroundColor: '#fb9114'
-  },
-  footer: {
-    height: 45,
-    width: '100%',
-    backgroundColor: '#fb9114'
-  },
   contentContainer: {
+    flexGrow: 1,
     backgroundColor: '#fff',
-    width: 360,
     borderRadius: 5,
     paddingVertical: 20,
     paddingHorizontal: 10,
+    marginHorizontal: 2.5,
+    marginTop: 20,
+    marginBottom: 50,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: .25,
+    shadowOffset: { width: 1, height: 1},
   },
   pageText: {
     fontFamily: 'InriaSans',

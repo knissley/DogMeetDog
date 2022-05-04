@@ -5,11 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createContext, useEffect, useState } from 'react';
 import { UserInfoContext } from './app/context/userInfoContext';
 import Home from './app/screens/Home';
-
-//REMOVE AFTER DEBUGGING
 import Register from './app/screens/Register';
 
-// const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
+
 type UserInfo = {
   id?: number;
   email?: string;
@@ -25,9 +24,34 @@ export default function App() {
     <>
       <UserInfoContext.Provider value={{ userInfo, setUserInfo }} >
         {
-          !userInfo?.isLoggedIn
-            ? <Register />
-            : <Home />
+          userInfo?.isLoggedIn
+            ? <Home />
+            : (
+              <NavigationContainer>
+                <Stack.Navigator>
+                  <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
+                    options={{
+                      header: () => null
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Register"
+                    component={Register}
+                    options={{
+                      headerStyle: {
+                        backgroundColor: '#fff',
+                      },
+                      headerTintColor: '#FB9114',
+                      headerTitleStyle: {
+                        fontSize: 20,
+                      }
+                    }}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            )
         }
       </UserInfoContext.Provider>
     </>

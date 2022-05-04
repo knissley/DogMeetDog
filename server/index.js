@@ -9,5 +9,6 @@ app.get('/users/:user_email', controllers.users.getAll);
 
 
 
+
 app.listen(port);
 console.log('Listening at: ', port);
