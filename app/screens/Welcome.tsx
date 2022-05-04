@@ -79,6 +79,7 @@ const Welcome = () => {
                   <TextInput
                     selectionColor='#FB9114'
                     onChangeText={setEmail}
+                    autoCorrect={false}
                   ></TextInput>
                 </View>
                 <Text style={styles.label}>Password</Text>
@@ -87,6 +88,7 @@ const Welcome = () => {
                     selectionColor='#FB9114'
                     secureTextEntry
                     onChangeText={setPassword}
+                    autoCorrect={false}
                   ></TextInput>
                 </View>
                 <Text style={styles.errorMsg}>{loginErrorMsg}</Text>
