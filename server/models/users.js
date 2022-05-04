@@ -23,7 +23,7 @@ module.exports = {
       ((
         SELECT id FROM Users WHERE email = '${userDetails.userEmail}'
       ), '${petDetails.petName}', ${petDetails.petAge} , '${petDetails.petPhoto}',
-      '${petDetails.petBreed}', '${petDetails.petSize}', '${petDetails.petSersonality}',
+      '${petDetails.petBreed}', '${petDetails.petSize}', '${petDetails.petPersonality}',
       '${petDetails.petActivity}')
     `;
 
