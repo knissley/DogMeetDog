@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Keyboard, TouchableWithoutFeedback, View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
 import { auth, createUser } from "../../firebase";
 import { LOCAL_IP } from "../../config";
+import { UserInfoContext } from "../context/userInfoContext";
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const [fontLoaded] = useFonts({
     IndieFlower: require('../assets/fonts/IndieFlower.ttf'),
     InriaSans: require('../assets/fonts/InriaSans-Regular.ttf'),
@@ -23,6 +24,8 @@ const Register = () => {
   const [petGender, setPetGender] = useState('');
   const [petPersonality, setPetPersonality] = useState('');
   const [petActivity, setPetActivity] = useState('');
+
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
   // push to later release
   // const [petPhotoUrl, setPetPhotoUrl] = useState('');
@@ -64,7 +67,18 @@ const Register = () => {
       createUser(auth, userEmail, userPassword),
       axios.post(`http://${LOCAL_IP}:3500/users/`, { userDetails, petDetails})
     ])
-      .then(() => console.log('navigate to home screen now'))
+      .then(() => {
+        const email = userEmail;
+        const name = userName;
+        let isLoggedIn = true;
+        setUserInfo({
+          ...userInfo,
+          email,
+          name,
+          isLoggedIn
+        });
+        navigation.replace('Search');
+      })
       .catch((err) => console.log('error creating user: ', err));
 
   }

@@ -53,7 +53,7 @@ const Welcome = ({ navigation }) => {
               name,
               isLoggedIn,
             })
-            console.log('success');
+            navigation.replace('Search');
           })
           .catch((err) => console.log('Error getting user info: ', err));
       })

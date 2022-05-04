@@ -7,6 +7,7 @@ app.use(express.json());
 
 app.get('/users/:user_email', controllers.users.getAll);
 app.post('/users', controllers.users.createOne);
+app.get('/pets', controllers.pets.getAll);
 
 
 

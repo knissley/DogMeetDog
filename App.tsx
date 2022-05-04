@@ -4,8 +4,14 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createContext, useEffect, useState } from 'react';
 import { UserInfoContext } from './app/context/userInfoContext';
-import Home from './app/screens/Home';
+import Search from './app/screens/Search';
 import Register from './app/screens/Register';
+import Filter from './app/screens/Filter';
+import { navigationRef } from './app/routes/RootNavigation';
+import Profile from './app/screens/Profile';
+import Messages from './app/screens/Messages';
+import Chat from './app/screens/Chat';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -17,43 +23,84 @@ type UserInfo = {
 };
 const UserInfo: UserInfo = {};
 
+const headerOptions = {
+  headerStyle: {
+    backgroundColor: '#fff',
+  },
+  headerTintColor: '#FB9114',
+  headerTitleStyle: {
+    fontSize: 20,
+  },
+};
+
 export default function App() {
   const [userInfo, setUserInfo] = useState(UserInfo);
 
   return (
     <>
       <UserInfoContext.Provider value={{ userInfo, setUserInfo }} >
-        {
-          userInfo?.isLoggedIn
-            ? <Home />
-            : (
-              <NavigationContainer>
-                <Stack.Navigator>
-                  <Stack.Screen
-                    name="Welcome"
-                    component={Welcome}
-                    options={{
-                      header: () => null
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Register"
-                    component={Register}
-                    options={{
-                      headerStyle: {
-                        backgroundColor: '#fff',
-                      },
-                      headerTintColor: '#FB9114',
-                      headerTitleStyle: {
-                        fontSize: 20,
-                      },
-                    }}
-                  />
-                </Stack.Navigator>
-              </NavigationContainer>
-            )
-        }
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator>
+            <Stack.Group>
+              <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+                options={{
+                  header: () => null
+                }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{
+                  headerStyle: {
+                    backgroundColor: '#fff',
+                  },
+                  headerTintColor: '#FB9114',
+                  headerTitleStyle: {
+                    fontSize: 20,
+                  },
+                }}
+              />
+            </Stack.Group>
+            <Stack.Group>
+              <Stack.Screen
+                name="Search"
+                component={Search}
+                options={headerOptions}
+              />
+              <Stack.Screen
+                name="Filter"
+                component={Filter}
+                options={{
+                  ...headerOptions,
+                  presentation: 'modal',
+                }}
+              />
+            </Stack.Group>
+            <Stack.Group>
+              <Stack.Screen
+                name="Profile"
+                component={Profile}
+                options={headerOptions}
+              />
+            </Stack.Group>
+            <Stack.Group>
+              <Stack.Screen
+                name="Messages"
+                component={Messages}
+                options={headerOptions}
+              />
+              <Stack.Screen
+                name="Chat"
+                component={Chat}
+                options={headerOptions}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </NavigationContainer>
       </UserInfoContext.Provider>
     </>
   );
 }
+
