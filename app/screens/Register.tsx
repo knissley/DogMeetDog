@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback, View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
+import { auth, createUser } from "../../firebase";
+import { LOCAL_IP } from "../../config";
 
 const Register = () => {
   const [fontLoaded] = useFonts({
@@ -11,22 +14,59 @@ const Register = () => {
   });
 
   const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [petName, setPetName] = useState('');
   const [petAge, setPetAge] = useState(0);
   const [petSize, setPetSize] = useState('');
   const [petBreed, setPetBreed] = useState('');
   const [petGender, setPetGender] = useState('');
-  const [petPhotoUrl, setPetPhotoUrl] = useState('');
+  const [petPersonality, setPetPersonality] = useState('');
+  const [petActivity, setPetActivity] = useState('');
+
+  // push to later release
+  // const [petPhotoUrl, setPetPhotoUrl] = useState('');
 
 
   //tidy this up
   const verifyInfo = () => {
     let infoIsVerified = false;
-    if (userName !== '' && petName !== '' && petAge !== 0 && petSize !== '' && petBreed !== '' && petGender !== '') {
+    if (userName !== ''
+      && petName !== ''
+      && petAge !== 0
+      && petSize !== ''
+      && petBreed !== ''
+      && petGender !== ''
+      && petPersonality !== ''
+      && petActivity !== '') {
       infoIsVerified = true;
     }
-
     return infoIsVerified;
+  }
+
+  const registerUser = () => {
+    const userDetails = {
+      userName,
+      userEmail,
+    };
+
+    const petDetails = {
+      petName,
+      petAge,
+      petSize,
+      petBreed,
+      petPersonality,
+      petActivity,
+      petPhoto: 'dummy_photo_url',
+    };
+
+    Promise.all([
+      createUser(auth, userEmail, userPassword),
+      axios.post(`http://${LOCAL_IP}:3500/users/`, { userDetails, petDetails})
+    ])
+      .then(() => console.log('navigate to home screen now'))
+      .catch((err) => console.log('error creating user: ', err));
+
   }
 
 
@@ -34,143 +74,194 @@ const Register = () => {
     fontLoaded
       ? (
         <>
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-          >
-            <View style={styles.body}>
-              <ScrollView
-                contentContainerStyle={styles.contentContainer}
-                showsVerticalScrollIndicator={false}
+          <View style={styles.body}>
+            <ScrollView
+              contentContainerStyle={styles.contentContainer}
+              showsVerticalScrollIndicator={false}
+            >
+              <TouchableWithoutFeedback
+                onPress={Keyboard.dismiss}
               >
-                {/* <Text style={styles.h1}>Sign Up</Text> */}
-                <Text style={styles.pageText}>What's your name?</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    selectionColor='#FB9114'
-                    onChangeText={setUserName}
-                    style={[styles.pageText, styles.inputField]}
-                    placeholder="Enter your name"
-                    autoCorrect={false}
-                  />
-                </View>
-                <Text style={styles.pageText}>What's your dog's name?</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    selectionColor='#FB9114'
-                    onChangeText={setPetName}
-                    style={[styles.pageText, styles.inputField]}
-                    placeholder="Enter your dog's name"
-                    autoCorrect={false}
-                  />
-                </View>
-                <Text style={styles.pageText}>How old is your dog?</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    selectionColor='#FB9114'
-                    keyboardType='numeric'
-                    onChangeText={(text) => setPetAge(Number(text))}
-                    style={[styles.pageText, styles.inputField]}
-                    placeholder="Enter your dog's age"
-                    autoCorrect={false}
-                  />
-                </View>
-                <Text style={styles.pageText}>What breed is your dog?</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    selectionColor='#FB9114'
-                    onChangeText={setPetBreed}
-                    style={[styles.pageText, styles.inputField]}
-                    placeholder="Enter your dog's breed"
-                    autoCorrect={false}
-                  />
-                </View>
-                <Text style={styles.pageText}>What size and gender is your dog?</Text>
-                <View style={styles.inputFlexContainer}>
-                  <View style={[styles.inputContainer, styles.inputFlex]}>
+                <>
+                  {/* <Text style={styles.h1}>Sign Up</Text> */}
+                  <Text style={styles.pageText}>What's your name?</Text>
+                  <View style={styles.inputContainer}>
                     <TextInput
                       selectionColor='#FB9114'
-                      onChangeText={setPetSize}
+                      onChangeText={setUserName}
                       style={[styles.pageText, styles.inputField]}
-                      placeholder="Size"
+                      placeholder="Enter your name"
                       autoCorrect={false}
                     />
                   </View>
-                  <View style={[styles.inputContainer, styles.inputFlex]}>
+                  <Text style={styles.pageText}>What's your email?</Text>
+                  <View style={styles.inputContainer}>
                     <TextInput
                       selectionColor='#FB9114'
-                      onChangeText={setPetGender}
+                      onChangeText={setUserEmail}
                       style={[styles.pageText, styles.inputField]}
-                      placeholder="Gender"
+                      placeholder="Enter your email"
                       autoCorrect={false}
                     />
                   </View>
-                </View>
-                <View style={styles.photoContainer}>
-                  <Text style={[styles.pageText, styles.photoTitle]}>Let's see your dog!</Text>
-                  <TouchableOpacity
-                    onPress={() => console.log('pressed pic')}
-                    activeOpacity={.65}
-                  >
-                    <View style={styles.photoUpload}>
-                      <Text style={styles.addPhoto}>+</Text>
+                  <Text style={styles.pageText}>Enter your password:</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      secureTextEntry={true}
+                      onChangeText={setUserPassword}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Enter your password"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>What's your dog's name?</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      onChangeText={setPetName}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Enter your dog's name"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>How old is your dog?</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      keyboardType='numeric'
+                      onChangeText={(text) => setPetAge(Number(text))}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Enter your dog's age"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>What breed is your dog?</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      onChangeText={setPetBreed}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Enter your dog's breed"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>What's your dog's favorite activity?</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      onChangeText={setPetActivity}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Enter your dog's favorite activity"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>How would you describe your dog?</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      selectionColor='#FB9114'
+                      onChangeText={setPetPersonality}
+                      style={[styles.pageText, styles.inputField]}
+                      placeholder="Describe your dog's personality"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <Text style={styles.pageText}>What size and gender is your dog?</Text>
+                  <View style={styles.inputFlexContainer}>
+                    <View style={[styles.inputContainer, styles.inputFlex]}>
+                      <TextInput
+                        selectionColor='#FB9114'
+                        onChangeText={setPetSize}
+                        style={[styles.pageText, styles.inputField]}
+                        placeholder="Size"
+                        autoCorrect={false}
+                      />
                     </View>
-                  </TouchableOpacity>
-                  <Text style={[styles.pageText, styles.photoSubtitle]}>Upload a photo</Text>
-                </View>
-                <View style={styles.sectionBreak} />
-                {
-                  verifyInfo()
-                    ? (
-                      <>
-                        <Text style={[styles.h1, {marginTop: 20}]}>Verify Your Info</Text>
-                        <View style={styles.verifyInfoContainer}>
-                          <Text style={[styles.pageText, styles.verifyText]}>My name is
-                            <Text style={styles.decorativeInfo}>
-                              {' '}
-                              {userName}
+                    <View style={[styles.inputContainer, styles.inputFlex]}>
+                      <TextInput
+                        selectionColor='#FB9114'
+                        onChangeText={setPetGender}
+                        style={[styles.pageText, styles.inputField]}
+                        placeholder="Gender"
+                        autoCorrect={false}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.photoContainer}>
+                    <Text style={[styles.pageText, styles.photoTitle]}>Let's see your dog!</Text>
+                    <TouchableOpacity
+                      onPress={() => console.log('pressed pic')}
+                      activeOpacity={.65}
+                    >
+                      <View style={styles.photoUpload}>
+                        <Text style={styles.addPhoto}>+</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <Text style={[styles.pageText, styles.photoSubtitle]}>Upload a photo</Text>
+                  </View>
+                  <View style={styles.sectionBreak} />
+                  {
+                    verifyInfo()
+                      ? (
+                        <>
+                          <Text style={[styles.h1, {marginTop: 20}]}>Verify Your Info</Text>
+                          <View style={styles.verifyInfoContainer}>
+                            <Text style={[styles.pageText, styles.verifyText]}>My name is
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {userName}
+                              </Text>
                             </Text>
-                          </Text>
-                          <Text style={[styles.pageText, styles.verifyText]}>and my dog
-                            <Text style={styles.decorativeInfo}>
-                              {' '}
-                              {petName}
+                            <Text style={[styles.pageText, styles.verifyText]}>and my dog
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {petName}
+                              </Text>
                             </Text>
-                          </Text>
-                          <Text style={[styles.pageText, styles.verifyText]}>is a
-                            <Text style={styles.decorativeInfo}>
-                              {' '}
-                              {petAge}
-                              {' '}
+                            <Text style={[styles.pageText, styles.verifyText]}>is a
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {petAge}
+                                {' '}
+                              </Text>
+                            -year-old
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {petSize.toLowerCase()}
+                              </Text>
+                            ,</Text>
+                            <Text style={[styles.pageText, styles.verifyText]}>
+                              <Text style={styles.decorativeInfo}>
+                                {petGender.toLowerCase()}
+                              </Text>
+                              ,
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {petBreed}
+                              </Text>
                             </Text>
-                          -year-old
-                            <Text style={styles.decorativeInfo}>
-                              {' '}
-                              {petSize.toLowerCase()}
-                            </Text>
-                          ,</Text>
-                          <Text style={[styles.pageText, styles.verifyText]}>
-                            <Text style={styles.decorativeInfo}>
-                              {petGender.toLowerCase()}
-                            </Text>
-                            <Text style={styles.decorativeInfo}>
-                              {' '}
-                              {petBreed}
-                            </Text>
-                          .</Text>
-                          <TouchableOpacity
-                            style={styles.button}
-                            activeOpacity={.65}
-                          >
-                            <Text style={styles.buttonText}>Register</Text>
-                          </TouchableOpacity>
-                        </View>
-                      </>
-                    )
-                  : null
-                }
-              </ScrollView>
-            </View>
-          </TouchableWithoutFeedback>
+                            <Text style={[styles.pageText, styles.verifyText]}>who loves
+                              <Text style={styles.decorativeInfo}>
+                                {' '}
+                                {petActivity.toLowerCase()}
+                              </Text>
+                            !</Text>
+                            <TouchableOpacity
+                              style={styles.button}
+                              activeOpacity={.65}
+                              onPress={registerUser}
+                            >
+                              <Text style={styles.buttonText}>Register</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </>
+                      )
+                    : null
+                  }
+                </>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+          </View>
         </>)
       : null
   );

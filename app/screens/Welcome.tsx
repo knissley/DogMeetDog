@@ -12,7 +12,7 @@ const getMessageFromErrorCode = (err: string) => {
 
   switch (errorCode) {
     case "invalid-email":
-      return "Invalid email, please try again."
+      return "Entered email is invalid, please try again."
     case "user-not-found":
       return "That email was not found, please try again."
     case "wrong-password":
@@ -41,7 +41,7 @@ const Welcome = ({ navigation }) => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
-        axios.get(`http://${LOCAL_IP}/users/${email}`)
+        axios.get(`http://${LOCAL_IP}:3500/users/${email}`)
           .then((res) => {
             const id = res.data.id;
             const name = res.data.name;
