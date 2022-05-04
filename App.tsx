@@ -6,9 +6,16 @@ import { createContext, useEffect, useState } from 'react';
 import { UserInfoContext } from './app/context/userInfoContext';
 
 // const Stack = createNativeStackNavigator();
+type UserInfo = {
+  id?: number;
+  email?: string;
+  isLoggedIn?: boolean;
+  name?: string;
+};
+const UserInfo: UserInfo = {};
 
 export default function App() {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState(UserInfo);
 
   return (
     <>
