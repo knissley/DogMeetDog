@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Pets (
   user_id INT NOT NULL,
   name VARCHAR(100) NOT NULL,
   age INT NOT NULL,
+  photo TEXT NOT NULL,
   breed VARCHAR(100) NOT NULL,
   size VARCHAR(10) NOT NULL,
   personality VARCHAR(50) NOT NULL,

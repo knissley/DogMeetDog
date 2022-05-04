@@ -5,8 +5,24 @@ import { auth, loginUser } from "../../firebase";
 import { UserInfoContext } from "../context/userInfoContext";
 import axios from "axios";
 
+const getMessageFromErrorCode = (err: string) => {
+  let errorCode = err.toString().split('/')[1];
+  errorCode = errorCode.split(')')[0];
 
-const WelcomeScreen = () => {
+  switch (errorCode) {
+    case "invalid-email":
+      return "Invalid email, please try again."
+    case "user-not-found":
+      return "That email was not found, please try again."
+    case "wrong-password":
+      return "Incorrect password, please try again."
+    default:
+      return "There was an error logging in, please try again."
+  }
+};
+
+
+const Welcome = () => {
   const [fontLoaded] = useFonts({
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
     IndieFlower: require('../assets/fonts/IndieFlower.ttf'),
@@ -37,27 +53,11 @@ const WelcomeScreen = () => {
               isLoggedIn,
             })
           })
-        //navigate to another page
+          .catch((err) => console.log('Error getting user info: ', err));
       })
       .catch(err => setLoginErrorMsg(getMessageFromErrorCode(err)));
   }
 
-  const getMessageFromErrorCode = (err: string) => {
-    let errorCode = err.toString().split('/')[1];
-    errorCode = errorCode.split(')')[0];
-    console.log(errorCode);
-
-    switch (errorCode) {
-      case "invalid-email":
-        return "Invalid email, please try again."
-      case "user-not-found":
-        return "That email was not found, please try again."
-      case "wrong-password":
-        return "Incorrect password, please try again."
-      default:
-        return "There was an error logging in, please try again."
-    }
-  }
 
   return (
     fontLoaded
@@ -215,4 +215,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default WelcomeScreen;
+export default Welcome;
