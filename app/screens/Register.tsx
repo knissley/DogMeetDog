@@ -11,24 +11,51 @@ const Register = () => {
   });
 
   const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [petName, setPetName] = useState('');
   const [petAge, setPetAge] = useState(0);
   const [petSize, setPetSize] = useState('');
   const [petBreed, setPetBreed] = useState('');
   const [petGender, setPetGender] = useState('');
+  const [petPersonality, setPetPersonality] = useState('');
+  const [petActivity, setPetActivity] = useState('');
 
   // push to later release
   // const [petPhotoUrl, setPetPhotoUrl] = useState('');
 
 
   //tidy this up
-  let infoIsVerified = false;
   const verifyInfo = () => {
-    if (userName !== '' && petName !== '' && petAge !== 0 && petSize !== '' && petBreed !== '' && petGender !== '') {
+    let infoIsVerified = false;
+    if (userName !== ''
+      && petName !== ''
+      && petAge !== 0
+      && petSize !== ''
+      && petBreed !== ''
+      && petGender !== ''
+      && petPersonality !== ''
+      && petActivity !== '') {
       infoIsVerified = true;
     }
-
     return infoIsVerified;
+  }
+
+  const registerUser = () => {
+    const userDetails = {
+      userName,
+      userEmail,
+    };
+
+    const petDetails = {
+      petName,
+      petAge,
+      petSize,
+      petBreed,
+      petPersonality,
+      petActivity,
+      petPhoto: 'dummy_photo_url',
+    };
+
   }
 
 
@@ -52,6 +79,16 @@ const Register = () => {
                     onChangeText={setUserName}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your name"
+                    autoCorrect={false}
+                  />
+                </View>
+                <Text style={styles.pageText}>What's your email?</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    selectionColor='#FB9114'
+                    onChangeText={setUserEmail}
+                    style={[styles.pageText, styles.inputField]}
+                    placeholder="Enter your email"
                     autoCorrect={false}
                   />
                 </View>
@@ -83,6 +120,26 @@ const Register = () => {
                     onChangeText={setPetBreed}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your dog's breed"
+                    autoCorrect={false}
+                  />
+                </View>
+                <Text style={styles.pageText}>What's your dog's favorite activity?</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    selectionColor='#FB9114'
+                    onChangeText={setPetActivity}
+                    style={[styles.pageText, styles.inputField]}
+                    placeholder="Enter your dog's favorite activity"
+                    autoCorrect={false}
+                  />
+                </View>
+                <Text style={styles.pageText}>How would you describe your dog?</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    selectionColor='#FB9114'
+                    onChangeText={setPetPersonality}
+                    style={[styles.pageText, styles.inputField]}
+                    placeholder="Describe your dog's personality"
                     autoCorrect={false}
                   />
                 </View>
@@ -154,11 +211,18 @@ const Register = () => {
                             <Text style={styles.decorativeInfo}>
                               {petGender.toLowerCase()}
                             </Text>
+                            ,
                             <Text style={styles.decorativeInfo}>
                               {' '}
                               {petBreed}
                             </Text>
-                          .</Text>
+                          </Text>
+                          <Text style={[styles.pageText, styles.verifyText]}>who loves
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {petActivity.toLowerCase()}
+                            </Text>
+                          !</Text>
                           <TouchableOpacity
                             style={styles.button}
                             activeOpacity={.65}
