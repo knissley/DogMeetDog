@@ -16,12 +16,14 @@ const Register = () => {
   const [petSize, setPetSize] = useState('');
   const [petBreed, setPetBreed] = useState('');
   const [petGender, setPetGender] = useState('');
-  const [petPhotoUrl, setPetPhotoUrl] = useState('');
+
+  // push to later release
+  // const [petPhotoUrl, setPetPhotoUrl] = useState('');
 
 
   //tidy this up
+  let infoIsVerified = false;
   const verifyInfo = () => {
-    let infoIsVerified = false;
     if (userName !== '' && petName !== '' && petAge !== 0 && petSize !== '' && petBreed !== '' && petGender !== '') {
       infoIsVerified = true;
     }

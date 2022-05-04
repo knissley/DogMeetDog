@@ -12,7 +12,7 @@ const getMessageFromErrorCode = (err: string) => {
 
   switch (errorCode) {
     case "invalid-email":
-      return "Invalid email, please try again."
+      return "Entered email is invalid, please try again."
     case "user-not-found":
       return "That email was not found, please try again."
     case "wrong-password":

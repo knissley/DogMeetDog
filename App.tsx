@@ -46,7 +46,7 @@ export default function App() {
                       headerTintColor: '#FB9114',
                       headerTitleStyle: {
                         fontSize: 20,
-                      }
+                      },
                     }}
                   />
                 </Stack.Navigator>
