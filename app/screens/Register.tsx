@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
 
 const Register = () => {
   const [fontLoaded] = useFonts({
@@ -19,6 +19,17 @@ const Register = () => {
   const [petPhotoUrl, setPetPhotoUrl] = useState('');
 
 
+  //tidy this up
+  const verifyInfo = () => {
+    let infoIsVerified = false;
+    if (userName !== '' && petName !== '' && petAge !== 0 && petSize !== '' && petBreed !== '' && petGender !== '') {
+      infoIsVerified = true;
+    }
+
+    return infoIsVerified;
+  }
+
+
   return (
     fontLoaded
       ? (
@@ -28,7 +39,10 @@ const Register = () => {
             onPress={Keyboard.dismiss}
           >
             <View style={styles.body}>
-              <ScrollView contentContainerStyle={styles.contentContainer}>
+              <ScrollView
+                contentContainerStyle={styles.contentContainer}
+                showsVerticalScrollIndicator={false}
+              >
                 <Text style={styles.h1}>Sign Up</Text>
                 <Text style={styles.pageText}>What's your name?</Text>
                 <View style={styles.inputContainer}>
@@ -37,6 +51,7 @@ const Register = () => {
                     onChangeText={setUserName}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your name"
+                    autoCorrect={false}
                   />
                 </View>
                 <Text style={styles.pageText}>What's your dog's name?</Text>
@@ -46,6 +61,7 @@ const Register = () => {
                     onChangeText={setPetName}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your dog's name"
+                    autoCorrect={false}
                   />
                 </View>
                 <Text style={styles.pageText}>How old is your dog?</Text>
@@ -56,6 +72,7 @@ const Register = () => {
                     onChangeText={(text) => setPetAge(Number(text))}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your dog's age"
+                    autoCorrect={false}
                   />
                 </View>
                 <Text style={styles.pageText}>What breed is your dog?</Text>
@@ -65,6 +82,7 @@ const Register = () => {
                     onChangeText={setPetBreed}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your dog's breed"
+                    autoCorrect={false}
                   />
                 </View>
                 <Text style={styles.pageText}>What size and gender is your dog?</Text>
@@ -75,6 +93,7 @@ const Register = () => {
                       onChangeText={setPetSize}
                       style={[styles.pageText, styles.inputField]}
                       placeholder="Size"
+                      autoCorrect={false}
                     />
                   </View>
                   <View style={[styles.inputContainer, styles.inputFlex]}>
@@ -83,6 +102,7 @@ const Register = () => {
                       onChangeText={setPetGender}
                       style={[styles.pageText, styles.inputField]}
                       placeholder="Gender"
+                      autoCorrect={false}
                     />
                   </View>
                 </View>
@@ -99,42 +119,56 @@ const Register = () => {
                   <Text style={[styles.pageText, styles.photoSubtitle]}>Upload a photo</Text>
                 </View>
                 <View style={styles.sectionBreak} />
-                <Text style={[styles.h1, {marginTop: 20}]}>Verify Your Info</Text>
-                <View style={styles.verifyInfoContainer}>
-                  <Text style={[styles.pageText, styles.verifyText]}>My name is
-                    <Text style={styles.decorativeInfo}>
-                      {' '}
-                      {userName}
-                    </Text>
-                  </Text>
-                  <Text style={[styles.pageText, styles.verifyText]}>and my dog
-                    <Text style={styles.decorativeInfo}>
-                      {' '}
-                      {petName}
-                    </Text>
-                  </Text>
-                  <Text style={[styles.pageText, styles.verifyText]}>is a
-                    <Text style={styles.decorativeInfo}>
-                      {' '}
-                      {petAge}
-                      {' '}
-                    </Text>
-                  -year-old
-                    <Text style={styles.decorativeInfo}>
-                      {' '}
-                      {petSize.toLowerCase()}
-                    </Text>
-                  ,</Text>
-                  <Text style={[styles.pageText, styles.verifyText]}>
-                    <Text style={styles.decorativeInfo}>
-                      {petGender.toLowerCase()}
-                    </Text>
-                    <Text style={styles.decorativeInfo}>
-                      {' '}
-                      {petBreed}
-                    </Text>
-                  .</Text>
-                </View>
+                {
+                  verifyInfo()
+                    ? (
+                      <>
+                        <Text style={[styles.h1, {marginTop: 20}]}>Verify Your Info</Text>
+                        <View style={styles.verifyInfoContainer}>
+                          <Text style={[styles.pageText, styles.verifyText]}>My name is
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {userName}
+                            </Text>
+                          </Text>
+                          <Text style={[styles.pageText, styles.verifyText]}>and my dog
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {petName}
+                            </Text>
+                          </Text>
+                          <Text style={[styles.pageText, styles.verifyText]}>is a
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {petAge}
+                              {' '}
+                            </Text>
+                          -year-old
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {petSize.toLowerCase()}
+                            </Text>
+                          ,</Text>
+                          <Text style={[styles.pageText, styles.verifyText]}>
+                            <Text style={styles.decorativeInfo}>
+                              {petGender.toLowerCase()}
+                            </Text>
+                            <Text style={styles.decorativeInfo}>
+                              {' '}
+                              {petBreed}
+                            </Text>
+                          .</Text>
+                          <TouchableOpacity
+                            style={styles.button}
+                            activeOpacity={.65}
+                          >
+                            <Text style={styles.buttonText}>Register</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    )
+                  : null
+                }
               </ScrollView>
             </View>
           </TouchableWithoutFeedback>
@@ -148,6 +182,9 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: '#FB9114',
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
   header: {
     height: 45,
@@ -162,8 +199,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: '#fff',
     width: 360,
-    marginLeft: 15,
-    marginRight: 15,
     borderRadius: 5,
     paddingVertical: 20,
     paddingHorizontal: 10,
@@ -253,6 +288,27 @@ const styles = StyleSheet.create({
   verifyInfoContainer: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: '80%',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowRadius: 2,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: .25,
+    fontFamily: 'InriaSansBold',
+    padding: 5,
+    marginTop: 50,
+    marginBottom: 30,
+    backgroundColor: '#FB9114',
+    height: 40,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontFamily: 'InriaSansBold',
   }
 })
 
