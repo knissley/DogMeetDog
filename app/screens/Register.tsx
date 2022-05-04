@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback, View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
+import { auth, createUser } from "../../firebase";
+import { LOCAL_IP } from "../../config";
 
 const Register = () => {
   const [fontLoaded] = useFonts({
@@ -12,6 +15,7 @@ const Register = () => {
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [petName, setPetName] = useState('');
   const [petAge, setPetAge] = useState(0);
   const [petSize, setPetSize] = useState('');
@@ -56,6 +60,13 @@ const Register = () => {
       petPhoto: 'dummy_photo_url',
     };
 
+    Promise.all([
+      createUser(auth, userEmail, userPassword),
+      axios.post(`http://${LOCAL_IP}:3500/users/`, { userDetails, petDetails})
+    ])
+      .then(() => console.log('navigate to home screen now'))
+      .catch((err) => console.log('error creating user: ', err));
+
   }
 
 
@@ -89,6 +100,17 @@ const Register = () => {
                     onChangeText={setUserEmail}
                     style={[styles.pageText, styles.inputField]}
                     placeholder="Enter your email"
+                    autoCorrect={false}
+                  />
+                </View>
+                <Text style={styles.pageText}>Enter your password:</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    selectionColor='#FB9114'
+                    secureTextEntry={true}
+                    onChangeText={setUserPassword}
+                    style={[styles.pageText, styles.inputField]}
+                    placeholder="Enter your password"
                     autoCorrect={false}
                   />
                 </View>
@@ -226,6 +248,7 @@ const Register = () => {
                           <TouchableOpacity
                             style={styles.button}
                             activeOpacity={.65}
+                            onPress={registerUser}
                           >
                             <Text style={styles.buttonText}>Register</Text>
                           </TouchableOpacity>

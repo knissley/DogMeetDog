@@ -12,4 +12,16 @@ module.exports = {
       }
     })
   },
+  createOne: (req, res) => {
+    console.log('body in createOne: ', req.body);
+    const userDetails = req.body.userDetails;
+    const petDetails = req.body.petDetails;
+    users.createOne(userDetails, petDetails, (err) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(201);
+      }
+    })
+  }
 }

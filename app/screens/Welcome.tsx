@@ -41,7 +41,7 @@ const Welcome = ({ navigation }) => {
     loginUser(auth, email, password)
       .then(() => {
         setLoginErrorMsg('');
-        axios.get(`http://${LOCAL_IP}/users/${email}`)
+        axios.get(`http://${LOCAL_IP}:3500/users/${email}`)
           .then((res) => {
             const id = res.data.id;
             const name = res.data.name;
