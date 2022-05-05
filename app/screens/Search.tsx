@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
 import { LOCAL_IP } from "../../config";
+import CustomImage from "../components/CustomImage";
 import { Footer } from "../components/Footer";
 import { UserInfoContext } from "../context/userInfoContext";
 
@@ -15,8 +16,8 @@ const Item = ({ item, onPress }) => (
     <View style={styles.petRowContentsContainer}>
       <View style={styles.petImageContainer}>
         <Image
-          source={require('../assets/images/remy.jpg')}
           style={styles.petPhoto}
+          source={require('../assets/images/pet-images/remy.jpg')}
         />
       </View>
       <View style={styles.petNamesContainer}>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     width: 80,
     borderColor: '#Fb9114',
     borderStyle: "solid",
-    borderWidth: 3,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: 'black',

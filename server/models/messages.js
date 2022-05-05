@@ -11,7 +11,7 @@ module.exports = {
       )
     ) messages
     FROM Messages m
-    WHERE m.chat_id = 1
+    WHERE m.chat_id = ${chatId}
     `;
 
     db.query(queryString)
@@ -20,8 +20,8 @@ module.exports = {
   },
   createMessage: (chatId, sender, message, timestamp, callback) => {
     const queryString = `
-    INSERT INTO Messages(id, chat_id, sender, timestamp, message)
-    VALUES(2, ${chatId}, '${sender}', '${timestamp}', '${message}')
+    INSERT INTO Messages(chat_id, sender, timestamp, message)
+    VALUES(${chatId}, '${sender}', '${timestamp}', '${message}')
     `;
 
     db.query(queryString)

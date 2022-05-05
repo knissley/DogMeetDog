@@ -23,8 +23,7 @@ const Chat = ({ route }) => {
   const [messageText, setMessageText] = useState('');
 
   const handleSendMessage = () => {
-    let timestamp = new Date();
-    timestamp = timestamp.toISOString().split('T')[0];
+    let timestamp = new Date().toISOString().split('T')[0];
     const messageDetails = {
       chatId,
       sender: userInfo.name,
@@ -40,7 +39,9 @@ const Chat = ({ route }) => {
 
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/messages/${chatId}`)
-      .then((res) => setMessages(res.data))
+      .then((res) => {
+        setMessages(res.data);
+      })
       .catch((err) => console.log('Error fetching chat messages: ', err));
   }, []);
 

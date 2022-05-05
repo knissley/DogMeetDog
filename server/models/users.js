@@ -35,4 +35,18 @@ module.exports = {
           callback(err);
         });
   },
+  getProfile: (userId, callback) => {
+    console.log(userId);
+    const queryString = `
+    SELECT u.name AS "userName",
+    p.*
+    FROM Users u, Pets p
+    WHERE u.id = ${userId}
+    AND p.user_id = ${userId}
+    `;
+
+    db.query(queryString)
+      .then((res) => callback(null, res.rows[0]))
+      .catch((err) => callback(err));
+  },
 }

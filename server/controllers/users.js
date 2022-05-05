@@ -23,5 +23,15 @@ module.exports = {
         res.sendStatus(201);
       }
     })
-  }
+  },
+  getProfile: (req, res) => {
+    const { user_id } = req.params;
+    users.getProfile(user_id, (err, profile) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        res.send(profile);
+      }
+    })
+  },
 }

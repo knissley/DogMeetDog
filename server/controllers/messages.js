@@ -13,7 +13,6 @@ module.exports = {
   },
   createMessage: (req, res) => {
     const { chatId, sender, message, timestamp} = req.body;
-    console.log(chatId, sender, message, timestamp);
     messages.createMessage(chatId, sender, message, timestamp, (err) => {
       if (err) {
         res.sendStatus(404);
