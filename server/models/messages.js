@@ -5,6 +5,7 @@ module.exports = {
     const queryString = `
     SELECT json_agg(
       json_build_object(
+        'messageId', m.id,
         'message', m.message,
         'sender', m.sender
       )
