@@ -4,8 +4,8 @@ import * as RootNavigation from '../routes/RootNavigation';
 
 export const Footer = ({ activePage }) => {
   const footerNavigate = (screen, params = {}) => {
-    RootNavigation.navigate(screen, params);
-  }
+    RootNavigation.replace(screen, params);
+  };
 
   return (
     <View style={styles.footer}>

@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFonts } from "expo-font";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
 import { LOCAL_IP } from "../../config";
 import { Footer } from "../components/Footer";
+import { UserInfoContext } from "../context/userInfoContext";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity
@@ -35,6 +36,8 @@ const Search = ({ navigation }) => {
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
   });
 
+  const { userInfo } = useContext(UserInfoContext);
+
   const handlePetClick = () => {
     console.log('clicked pet row');
   }
@@ -54,7 +57,10 @@ const Search = ({ navigation }) => {
 
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/pets`)
-      .then((res) => setPets(res.data))
+      .then((res) => {
+        const petList = res.data.filter((pet) => pet.ownerName !== userInfo.name);
+        setPets(petList);
+      })
       .catch((err) => console.log('error fetching pets: ', err));
   }, []);
 
@@ -79,7 +85,7 @@ const Search = ({ navigation }) => {
           />
         </View>
       </View>
-      <Footer activePage={'Search'} navigation={navigation} />
+      <Footer activePage={'Search'} />
     </>
     )
     : null
