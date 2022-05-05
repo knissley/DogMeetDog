@@ -1,9 +1,10 @@
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserInfoContext } from '../context/userInfoContext';
 import axios from 'axios';
 import { LOCAL_IP } from '../../config';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const Item = ({ item, backgroundColor, textAlign }) => (
@@ -57,7 +58,12 @@ const Chat = ({ route }) => {
               selectionColor='#FB9114'
             />
           </View>
-          <Text>Submit</Text>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            activeOpacity={.55}
+          >
+            <Icon name="send" size={25} color="#fff" />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -109,10 +115,15 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 5,
     flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
   inputContainer: {
     backgroundColor: '#fff',
     padding: 10,
     width: '80%',
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

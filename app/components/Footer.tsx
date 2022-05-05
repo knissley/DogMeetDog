@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import * as RootNavigation from '../routes/RootNavigation';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 export const Footer = ({ activePage }) => {
   const footerNavigate = (screen, params = {}) => {
@@ -19,13 +21,14 @@ export const Footer = ({ activePage }) => {
         <Text
           style={{ color: activePage === 'Profile' ? '#FB9114' : 'black'}}
         >Profile</Text>
+
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => footerNavigate('Search')}
       >
-        <Text
-          style={{ color: activePage === 'Search' ? '#FB9114' : 'black'}}
-        >Search</Text>
+        <AntIcon name="search1" size={30} color={
+          activePage === 'Search' ? '#FB9114' : 'black'
+        } />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => footerNavigate('Messages')}
