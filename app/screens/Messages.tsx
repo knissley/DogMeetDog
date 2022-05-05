@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFonts } from "expo-font";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
 import { LOCAL_IP } from "../../config";
 import { Footer } from "../components/Footer";
+import { UserInfoContext } from "../context/userInfoContext";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity
@@ -19,8 +20,8 @@ const Item = ({ item, onPress }) => (
         />
       </View>
       <View style={styles.messageNamesContainer}>
-        <Text style={[styles.pageText, styles.ownerName]}>{item.ownerName}'s</Text>
-        <Text style={[styles.pageText, styles.messageName]}>{item.name}</Text>
+        <Text style={[styles.pageText, styles.ownerName]}>{item.userName}'s</Text>
+        <Text style={[styles.pageText, styles.messageName]}>{item.petName}</Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -35,25 +36,27 @@ const Search = ({ navigation }) => {
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
   });
 
-  const handlePetClick = () => {
+  const { userInfo }= useContext(UserInfoContext);
+
+  const handleMessageClick = () => {
     console.log('clicked message row');
   }
 
-  const [pets, setPets] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const renderItem = ({ item }) => {
     return (
       <Item
       item={item}
-      onPress={handlePetClick}
+      onPress={handleMessageClick}
       />
       )
     }
 
   useEffect(() => {
-    axios.get(`http://${LOCAL_IP}:3500/pets`)
-      .then((res) => setPets(res.data))
-      .catch((err) => console.log('error fetching pets: ', err));
+    axios.get(`http://${LOCAL_IP}:3500/chats/${userInfo.id}`)
+      .then((res) => setMessages(res.data))
+      .catch((err) => console.log('error fetching messages: ', err));
   }, []);
 
   return (
@@ -62,9 +65,9 @@ const Search = ({ navigation }) => {
       <View style={styles.body}>
         <View style={styles.messagesContainer}>
           <FlatList
-            data={pets}
+            data={messages}
             renderItem={renderItem}
-            keyExtractor={(item) => item.userId}
+            keyExtractor={(item) => item.chatId}
             showsVerticalScrollIndicator={false}
           />
         </View>
