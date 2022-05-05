@@ -39,7 +39,9 @@ const Chat = ({ route }) => {
 
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/messages/${chatId}`)
-      .then((res) => setMessages(res.data))
+      .then((res) => {
+        setMessages(res.data);
+      })
       .catch((err) => console.log('Error fetching chat messages: ', err));
   }, []);
 

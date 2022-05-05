@@ -11,7 +11,7 @@ module.exports = {
       )
     ) messages
     FROM Messages m
-    WHERE m.chat_id = 1
+    WHERE m.chat_id = ${chatId}
     `;
 
     db.query(queryString)

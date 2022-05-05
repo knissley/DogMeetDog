@@ -15,7 +15,7 @@ const Item = ({ item, onPress }) => (
     <View style={styles.messageRowContentsContainer}>
       <View style={styles.messageImageContainer}>
         <Image
-          source={require('../assets/images/remy.jpg')}
+          source={require('../assets/images/pet-images/remy.jpg')}
           style={styles.messagePhoto}
         />
       </View>
@@ -56,7 +56,7 @@ const Search = ({ navigation }) => {
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/chats/${userInfo.id}`)
       .then((res) => setMessages(res.data))
-      .catch((err) => console.log('error fetching messages: ', err));
+      .catch((err) => console.log('error fetching chats: ', err));
   }, []);
 
   return (

@@ -41,7 +41,7 @@ const Profile = ({ navigation }) => {
           <View style={styles.screenContainer}>
             <View style={styles.photoContainer}>
               <Image
-                source={require('../assets/images/remy.jpg')}
+                source={require('../assets/images/pet-images/remy.jpg')}
                 style={styles.petPhoto}
               />
             </View>
@@ -73,7 +73,7 @@ const Profile = ({ navigation }) => {
               ,</Text>
               <Text style={[styles.pageText, styles.verifyText]}>
                 <Text style={styles.decorativeInfo}>
-                  {'PLACEHOLDER'.toLowerCase()}
+                  {profileDetails.gender}
                 </Text>
                 ,
                 <Text style={styles.decorativeInfo}>
