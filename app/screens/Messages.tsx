@@ -38,8 +38,8 @@ const Search = ({ navigation }) => {
 
   const { userInfo }= useContext(UserInfoContext);
 
-  const handleMessageClick = (chatId) => {
-    navigation.navigate('Chat', { chatId })
+  const handleMessageClick = (chatId, userName) => {
+    navigation.navigate('Chat', { chatId, userName })
   }
 
   const [messages, setMessages] = useState([]);
@@ -48,7 +48,7 @@ const Search = ({ navigation }) => {
     return (
       <Item
       item={item}
-      onPress={() => handleMessageClick(item.chatId)}
+      onPress={() => handleMessageClick(item.chatId, item.userName)}
       />
       )
     }
