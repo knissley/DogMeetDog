@@ -1,8 +1,7 @@
-import { Text, View } from 'react-native';
 import Welcome from './app/screens/Welcome';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserInfoContext } from './app/context/userInfoContext';
 import Search from './app/screens/Search';
 import Register from './app/screens/Register';
@@ -11,7 +10,6 @@ import { navigationRef } from './app/routes/RootNavigation';
 import Profile from './app/screens/Profile';
 import Messages from './app/screens/Messages';
 import Chat from './app/screens/Chat';
-
 
 const Stack = createNativeStackNavigator();
 
@@ -102,5 +100,5 @@ export default function App() {
       </UserInfoContext.Provider>
     </>
   );
-}
+};
 

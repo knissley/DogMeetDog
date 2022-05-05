@@ -1,4 +1,4 @@
-const { pets }= require('../models');
+const { pets } = require('../models');
 
 module.exports = {
   getAll: (req, res) => {
