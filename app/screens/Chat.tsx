@@ -7,14 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const Item = ({ item, backgroundColor, textAlign }) => (
-  <View style={[styles.messageContainer, backgroundColor]}>
-    <View style={styles.innerMessageContainer}>
-      <Text style={[styles.messageText, textAlign]}>{item.message}</Text>
-    </View>
+const Item = ({ item, textAlign }) => (
+  <View style={styles.messageContainer}>
+    <Text style={[styles.messageText, textAlign]}>{item.message}</Text>
   </View>
 );
-
 
 
 const Chat = ({ route }) => {
@@ -22,6 +19,24 @@ const Chat = ({ route }) => {
   const { chatId, userName:recipientName } = route.params;
 
   const [messages, setMessages] = useState([]);
+
+  const [messageText, setMessageText] = useState('');
+
+  const handleSendMessage = () => {
+    let timestamp = new Date();
+    timestamp = timestamp.toISOString().split('T')[0];
+    const messageDetails = {
+      chatId,
+      sender: userInfo.name,
+      message: messageText,
+      timestamp,
+    };
+
+    axios.post(`http://${LOCAL_IP}:3500/messages`, messageDetails)
+      .then(() => axios.get(`http://${LOCAL_IP}:3500/messages/${chatId}`))
+        .then((res) => setMessages(res.data))
+          .catch((err) => console.log('error getting messages after post: ', err));
+  }
 
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/messages/${chatId}`)
@@ -31,12 +46,10 @@ const Chat = ({ route }) => {
 
   const renderItem = ({ item }) => {
     const textAlign = item.sender === userInfo.name ? 'right' : 'left';
-    const backgroundColor = '#fff';
 
     return (
       <Item
         item={item}
-        backgroundColor={{ backgroundColor }}
         textAlign={{ textAlign }}
       />
     )
@@ -56,11 +69,13 @@ const Chat = ({ route }) => {
             <TextInput
               placeholder={`Send message to ${recipientName}`}
               selectionColor='#FB9114'
+              onChangeText={setMessageText}
             />
           </View>
           <TouchableOpacity
             style={styles.iconContainer}
             activeOpacity={.55}
+            onPress={handleSendMessage}
           >
             <Icon name="send" size={25} color="#fff" />
           </TouchableOpacity>
@@ -95,7 +110,7 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     width: 280,
-    marginVertical: 20,
+    marginBottom: 15,
     padding: 10,
     borderRadius: 5,
     shadowColor: 'black',
@@ -105,6 +120,7 @@ const styles = StyleSheet.create({
     borderColor: '#FB9114',
     borderWidth: 3,
     borderStyle: 'solid',
+    backgroundColor: '#fff',
   },
   messageList: {
     flex: 1,

@@ -17,5 +17,15 @@ module.exports = {
     db.query(queryString)
       .then((res) => callback(null, res.rows[0].messages))
       .catch((err) => callback(err));
+  },
+  createMessage: (chatId, sender, message, timestamp, callback) => {
+    const queryString = `
+    INSERT INTO Messages(id, chat_id, sender, timestamp, message)
+    VALUES(2, ${chatId}, '${sender}', '${timestamp}', '${message}')
+    `;
+
+    db.query(queryString)
+      .then((res) => callback(null))
+      .catch((err) => console.log('error is here'));
   }
 };
