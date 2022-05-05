@@ -82,6 +82,7 @@ const Search = ({ navigation }) => {
             data={pets}
             renderItem={renderItem}
             keyExtractor={(item) => item.userId}
+            showsVerticalScrollIndicator={false}
           />
         </View>
       </View>

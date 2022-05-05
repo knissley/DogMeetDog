@@ -39,7 +39,6 @@ const Search = ({ navigation }) => {
     console.log('clicked pet row');
   }
 
-
   const [pets, setPets] = useState([]);
 
 
@@ -62,16 +61,7 @@ const Search = ({ navigation }) => {
     fontLoaded ? (
     <>
       <View style={styles.body}>
-        <View style={styles.searchContainer}>
-          <View style={styles.searchTitleContainer}>
-            <Text style={[styles.pageText, {fontSize: 22}]}>Dogs near you</Text>
-            <TouchableOpacity
-              activeOpacity={.65}
-              onPress={() => navigation.navigate('Filter')}
-            >
-              <Text>Filter</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.messagesContainer}>
           <FlatList
             data={pets}
             renderItem={renderItem}
@@ -79,7 +69,7 @@ const Search = ({ navigation }) => {
           />
         </View>
       </View>
-      <Footer activePage={'Search'} navigation={navigation} />
+      <Footer activePage={'Messages'} />
     </>
     )
     : null
@@ -94,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FB9114',
     alignContent: 'center',
   },
-  searchContainer: {
+  messagesContainer: {
     flexGrow: 1,
     backgroundColor: '#fff',
     borderRadius: 5,

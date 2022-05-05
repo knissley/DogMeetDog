@@ -4,7 +4,11 @@ import * as RootNavigation from '../routes/RootNavigation';
 
 export const Footer = ({ activePage }) => {
   const footerNavigate = (screen, params = {}) => {
-    RootNavigation.replace(screen, params);
+    if (screen === activePage) {
+      RootNavigation.navigate(screen, params);
+    } else {
+      RootNavigation.replace(screen, params);
+    }
   };
 
   return (
