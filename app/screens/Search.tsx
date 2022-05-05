@@ -3,7 +3,6 @@ import { useFonts } from "expo-font";
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
 import { LOCAL_IP } from "../../config";
-import CustomImage from "../components/CustomImage";
 import { Footer } from "../components/Footer";
 import { UserInfoContext } from "../context/userInfoContext";
 
