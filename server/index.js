@@ -13,7 +13,7 @@ app.post('/users', controllers.users.createOne);
 app.get('/pets', controllers.pets.getAll);
 
 // Chat Rooms
-app.get('/chats/:chat_id', controllers.chats.getAll);
+app.get('/chats/:user_id', controllers.chats.getAll);
 app.post('/chats/', controllers.chats.createChat);
 
 // Messages

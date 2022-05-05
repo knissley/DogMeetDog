@@ -36,11 +36,10 @@ const Search = ({ navigation }) => {
   });
 
   const handlePetClick = () => {
-    console.log('clicked pet row');
+    console.log('clicked message row');
   }
 
   const [pets, setPets] = useState([]);
-
 
   const renderItem = ({ item }) => {
     return (
@@ -66,6 +65,7 @@ const Search = ({ navigation }) => {
             data={pets}
             renderItem={renderItem}
             keyExtractor={(item) => item.userId}
+            showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
