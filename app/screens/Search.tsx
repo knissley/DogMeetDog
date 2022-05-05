@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     width: 80,
     borderColor: '#Fb9114',
     borderStyle: "solid",
-    borderWidth: 3,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: 'black',

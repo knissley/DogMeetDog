@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS Pets (
   size VARCHAR(10) NOT NULL,
   personality VARCHAR(50) NOT NULL,
   activity VARCHAR(50) NOT NULL,
+  gender VARCHAR(50) NOT NULL,
   FOREIGN KEY(user_id)
     REFERENCES Users(id)
 );

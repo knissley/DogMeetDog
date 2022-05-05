@@ -23,8 +23,7 @@ const Chat = ({ route }) => {
   const [messageText, setMessageText] = useState('');
 
   const handleSendMessage = () => {
-    let timestamp = new Date();
-    timestamp = timestamp.toISOString().split('T')[0];
+    let timestamp = new Date().toISOString().split('T')[0];
     const messageDetails = {
       chatId,
       sender: userInfo.name,

@@ -20,6 +20,9 @@ app.post('/chats/', controllers.chats.createChat);
 app.get('/messages/:chat_id', controllers.messages.getAll);
 app.post('/messages/', controllers.messages.createMessage);
 
+// Profiles
+app.get('/profiles/:user_id', controllers.users.getProfile);
+
 
 app.listen(port);
 console.log('Listening at: ', port);

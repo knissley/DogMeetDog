@@ -65,7 +65,10 @@ export default function App() {
               <Stack.Screen
                 name="Search"
                 component={Search}
-                options={headerOptions}
+                options={{
+                  ...headerOptions,
+                  animation: 'fade',
+                }}
               />
               <Stack.Screen
                 name="Filter"
@@ -80,14 +83,20 @@ export default function App() {
               <Stack.Screen
                 name="Profile"
                 component={Profile}
-                options={headerOptions}
+                options={{
+                  ...headerOptions,
+                  animation: 'fade',
+                }}
               />
             </Stack.Group>
             <Stack.Group>
               <Stack.Screen
                 name="Messages"
                 component={Messages}
-                options={headerOptions}
+                options={{
+                  ...headerOptions,
+                  animation: 'fade'
+                }}
               />
               <Stack.Screen
                 name="Chat"
