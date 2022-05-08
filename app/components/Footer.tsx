@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import * as RootNavigation from '../routes/RootNavigation';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import IOIcon from 'react-native-vector-icons/Ionicons';
+import { UserInfoContext } from '../context/userInfoContext';
 
 export const Footer = ({ activePage }) => {
+  const { userInfo } = useContext(UserInfoContext);
   const footerNavigate = (screen, params = {}) => {
     if (screen === activePage) {
       RootNavigation.navigate(screen, params);
@@ -16,7 +18,7 @@ export const Footer = ({ activePage }) => {
   return (
     <View style={styles.footer}>
       <TouchableOpacity
-        onPress={() => footerNavigate('Profile')}
+        onPress={() => footerNavigate('Profile', { userId: userInfo.id })}
       >
         <IOIcon name="person" size={30} color={
           activePage === 'Profile' ? '#FB9114' : 'black'

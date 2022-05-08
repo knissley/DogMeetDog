@@ -1,11 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import React from 'react'
 
-export default function Filter() {
+export default function Filter({ route, navigation }) {
+  const { setFiltered, setAppliedFilters } = route.params;
   return (
     <View style={styles.body}>
       <View style={styles.screenContainer}>
-        <Text>Filter your search here!</Text>
+        <View>
+          <Text style={{fontSize: 20, textAlign: 'center'}}>Apply Filters:</Text>
+          <Button
+            title="Small Dog"
+            onPress={() => {
+              setAppliedFilters((prevState) => [...prevState, {size: 'small'}]);
+              setFiltered(true);
+              navigation.navigate('Search');
+            }}
+          />
+        </View>
+        <Button
+          onPress={() => {
+            setAppliedFilters([]);
+            setFiltered(false);
+            navigation.navigate('Search');
+          }}
+          title="Clear Filters"
+        />
       </View>
     </View>
   )
@@ -29,5 +48,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: .25,
     shadowOffset: { width: 1, height: 1},
+    justifyContent: 'space-between',
   }
 })

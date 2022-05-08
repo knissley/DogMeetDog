@@ -4,8 +4,7 @@ module.exports = {
   getAll: (callback) => {
     const queryString = `
     SELECT
-    p.photo,
-    p.name,
+    p.*,
     u.name AS "ownerName",
     u.id AS "userId"
     FROM Pets p, Users u
