@@ -24,7 +24,7 @@ const Profile = ({ navigation, route }) => {
     axios.get(`http://${LOCAL_IP}:3500/profiles/${userId}`)
       .then((res) => setProfileDetails(res.data))
       .catch((err) => console.log('error fetching profile: ', err));
-  }, []);
+  }, [userId]);
 
   const handleSignout = () => {
     signOut(auth)
@@ -97,6 +97,7 @@ const Profile = ({ navigation, route }) => {
               !</Text>
               </View>
             </View>
+            <View style={{ flex: 1}}/>
             {
               userInfo.id === userId
               ? (
@@ -159,10 +160,10 @@ const styles = StyleSheet.create({
   decorativeInfo: {
     fontFamily: 'IndieFlower',
     color: '#FB9114',
-    fontSize: 32,
+    fontSize: 28,
   },
   verifyText: {
-    fontSize: 22,
+    fontSize: 20,
     marginBottom: -15,
   },
   petPhoto:{

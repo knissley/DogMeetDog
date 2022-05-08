@@ -5,6 +5,7 @@ import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from "react
 import { LOCAL_IP } from "../../config";
 import { Footer } from "../components/Footer";
 import { UserInfoContext } from "../context/userInfoContext";
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity
@@ -39,6 +40,8 @@ const Search = ({ navigation }) => {
   const { userInfo } = useContext(UserInfoContext);
 
   const [pets, setPets] = useState([]);
+  const [filtered, setFiltered] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState([]);
 
   const renderItem = ({ item }) => {
     return (
@@ -50,13 +53,17 @@ const Search = ({ navigation }) => {
     }
 
   useEffect(() => {
-    axios.get(`http://${LOCAL_IP}:3500/pets`)
-      .then((res) => {
-        const petList = res.data.filter((pet) => pet.ownerName !== userInfo.name);
-        setPets(petList);
-      })
-      .catch((err) => console.log('error fetching pets: ', err));
-  }, []);
+    if (!filtered) {
+      axios.get(`http://${LOCAL_IP}:3500/pets`)
+        .then((res) => {
+          const petList = res.data.filter((pet) => pet.ownerName !== userInfo.name);
+          setPets(petList);
+        })
+        .catch((err) => console.log('error fetching pets: ', err));
+    } else {
+      setPets((prevState) => prevState.filter((pet) => pet.size === appliedFilters[0].size));
+    }
+  }, [filtered]);
 
   return (
     fontLoaded ? (
@@ -67,9 +74,9 @@ const Search = ({ navigation }) => {
             <Text style={[styles.pageText, {fontSize: 22}]}>Dogs near you</Text>
             <TouchableOpacity
               activeOpacity={.65}
-              onPress={() => navigation.navigate('Filter')}
+              onPress={() => navigation.navigate('Filter', {setFiltered, setAppliedFilters})}
             >
-              <Text>Filter</Text>
+              <FAIcon name="filter" size={24} color={filtered ? '#FB9114' : 'black'} />
             </TouchableOpacity>
           </View>
           <FlatList
