@@ -47,7 +47,7 @@ const Search = ({ navigation }) => {
     return (
       <Item
       item={item}
-      onPress={() => navigation.navigate('Profile', { userId: item.userId })}
+      onPress={() => navigation.replace('Profile', { userId: item.userId })}
       />
       )
     }
