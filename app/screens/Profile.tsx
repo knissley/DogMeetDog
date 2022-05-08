@@ -1,14 +1,16 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { LOCAL_IP } from '../../config';
-import { UserInfoContext } from '../context/userInfoContext';
 import { useFonts } from 'expo-font';
 import axios from 'axios';
 import { Footer } from '../components/Footer';
 import { signOut, auth } from '../../firebase';
+import { UserInfoContext } from '../context/userInfoContext';
 
-const Profile = ({ navigation }) => {
-  const { userInfo }= useContext(UserInfoContext);
+const Profile = ({ navigation, route }) => {
+  const { userId } = route.params;
+  const { userInfo } = useContext(UserInfoContext);
+  // const { userInfo }= useContext(UserInfoContext);
   const [fontLoaded] = useFonts({
     IndieFlower: require('../assets/fonts/IndieFlower.ttf'),
     InriaSans: require('../assets/fonts/InriaSans-Regular.ttf'),
@@ -19,7 +21,7 @@ const Profile = ({ navigation }) => {
   const [profileDetails, setProfileDetails] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://${LOCAL_IP}:3500/profiles/${userInfo.id}`)
+    axios.get(`http://${LOCAL_IP}:3500/profiles/${userId}`)
       .then((res) => setProfileDetails(res.data))
       .catch((err) => console.log('error fetching profile: ', err));
   }, []);
@@ -32,6 +34,12 @@ const Profile = ({ navigation }) => {
       })
       .catch((err) => console.log('Error signing out user: ', err));
   };
+
+  const handleSendMessage = () => {
+    axios.post(`http://${LOCAL_IP}:3500/chats`, { userOneId: userInfo.id, userTwoId: userId})
+    .then(() => navigation.replace('Messages'))
+    .catch((err) => console.log('Error creating chat room: ', err));
+  }
 
   return (
     fontLoaded && profileDetails
@@ -89,13 +97,27 @@ const Profile = ({ navigation }) => {
               !</Text>
               </View>
             </View>
-            <TouchableOpacity
-              activeOpacity={.65}
-              onPress={handleSignout}
-              style={styles.signoutButton}
-            >
-              <Text style={styles.signoutText}>Sign Out</Text>
-            </TouchableOpacity>
+            {
+              userInfo.id === userId
+              ? (
+                <TouchableOpacity
+                  activeOpacity={.65}
+                  onPress={handleSignout}
+                  style={styles.signoutButton}
+                >
+                  <Text style={styles.signoutText}>Sign Out</Text>
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity
+                  activeOpacity={.65}
+                  onPress={handleSendMessage}
+                  style={styles.signoutButton}
+                >
+                  <Text style={styles.signoutText}>Send a Message</Text>
+                </TouchableOpacity>
+              )
+            }
           </View>
         </View>
         <Footer activePage={'Profile'} />

@@ -38,19 +38,13 @@ const Search = ({ navigation }) => {
 
   const { userInfo } = useContext(UserInfoContext);
 
-  const handlePetClick = () => {
-    console.log('clicked pet row');
-  }
-
-
   const [pets, setPets] = useState([]);
-
 
   const renderItem = ({ item }) => {
     return (
       <Item
       item={item}
-      onPress={handlePetClick}
+      onPress={() => navigation.navigate('Profile', { userId: item.userId })}
       />
       )
     }
