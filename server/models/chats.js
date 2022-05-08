@@ -9,7 +9,8 @@ module.exports = {
       json_build_object(
         'chatId', c.id,
         'userName', u.name,
-        'petName', p.name
+        'petName', p.name,
+        'photo', p.photo
       )
     )
     FROM Chats c, Users u, Pets p

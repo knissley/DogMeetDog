@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
     AbrilFatfaceRegular: require('../assets/fonts/AbrilFatface-Regular.ttf'),
   });
 
-  const [profileDetails, setProfileDetails] = useState({});
+  const [profileDetails, setProfileDetails] = useState(null);
 
   useEffect(() => {
     axios.get(`http://${LOCAL_IP}:3500/profiles/${userInfo.id}`)
@@ -34,14 +34,14 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    fontLoaded
+    fontLoaded && profileDetails
     ? (
       <>
         <View style={styles.body}>
           <View style={styles.screenContainer}>
             <View style={styles.photoContainer}>
               <Image
-                source={require('../assets/images/pet-images/remy.jpg')}
+                source={{ uri: `https://tinyurl.com/dogmeet${profileDetails.photo.split('.')[0]}`}}
                 style={styles.petPhoto}
               />
             </View>

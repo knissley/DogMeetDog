@@ -39,7 +39,7 @@ INSERT INTO Pets(user_id, name, age, photo, breed, size, personality, activity, 
 VALUES(6, 'Rex', 10, 'rex.jpg', 'Golden Retriever', 'large', 'playful', 'playing fetch', 'male');
 
 INSERT INTO Pets(user_id, name, age, photo, breed, size, personality, activity, gender)
-VALUES(7, 'Snickers', 8, 'snickers.jpg', 'Chihuahua', 'small', 'quiet', 'sitting in your lap');
+VALUES(7, 'Snickers', 8, 'snickers.jpg', 'Chihuahua', 'small', 'quiet', 'sitting in your lap', 'male');
 
 
 

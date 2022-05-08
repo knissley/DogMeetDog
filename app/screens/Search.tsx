@@ -16,7 +16,7 @@ const Item = ({ item, onPress }) => (
       <View style={styles.petImageContainer}>
         <Image
           style={styles.petPhoto}
-          source={require('../assets/images/pet-images/remy.jpg')}
+          source={{ uri: `https://tinyurl.com/dogmeet${item.photo.split('.')[0]}`}}
         />
       </View>
       <View style={styles.petNamesContainer}>
