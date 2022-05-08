@@ -75,7 +75,7 @@ export default function App() {
                 component={Filter}
                 options={{
                   ...headerOptions,
-                  presentation: 'modal',
+                  presentation: 'modal'
                 }}
               />
             </Stack.Group>
@@ -95,13 +95,16 @@ export default function App() {
                 component={Messages}
                 options={{
                   ...headerOptions,
-                  animation: 'fade'
+                  animation: 'fade',
                 }}
               />
               <Stack.Screen
                 name="Chat"
                 component={Chat}
-                options={headerOptions}
+                options={{
+                  ...headerOptions,
+                  animation: 'simple_push',
+                }}
               />
             </Stack.Group>
           </Stack.Navigator>
