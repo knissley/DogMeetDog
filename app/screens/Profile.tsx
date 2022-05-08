@@ -178,7 +178,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 200,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: .35,
+    shadowOffset: { width: 2, height: 2},
   },
   verifyInfoContainer: {
     justifyContent: "center",
