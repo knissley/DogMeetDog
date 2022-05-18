@@ -22,3 +22,22 @@ By the end of this project I developed a huge appreciation for mobile developers
 <br>
 <br>
 ## The App in Action
+
+
+
+https://user-images.githubusercontent.com/79770577/169105171-e3919fbd-435d-4329-8ed5-2040a1f3b7a4.mp4
+
+
+<br>
+
+## Future Changes
+
+### Next I want to: 
+
+<ul>
+  <li>Implement more filter options for the user</li>
+<li>Create a better flow of sending a message to another user, likely taking the user fully to the message screen.</li>
+<li>Improve overall UI, especially of the messages screen.</li>
+<li>Incorporate notifications to make it clear when a user has received a message.</li>
+<li>Streamline registration process for a better user experience</li>
+</ul>
