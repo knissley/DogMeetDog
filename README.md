@@ -14,9 +14,9 @@ The app utilizes Firebase to authenticate logins, allows users to find nearby do
 <br>
 
 ## Story
-I built this app as my first dive into React-Native during a 2.5-day sprint at the bootcamp I was attending. My friend had the idea for this app because her dog is super sweet in smaller settings but gets very loud and aggressive in larger settings like a dog park. She wanted to be able to introduce her dog to new friends without the anxiety of taking him to a dog park.
+I built this app as my first dive into React-Native during a 4-day sprint at the bootcamp I was attending. My friend had the idea for this app because her dog is super sweet in smaller settings but gets very loud and aggressive in larger settings like a dog park. She wanted to be able to introduce her dog to new friends without the anxiety of taking him to a dog park.
 
-When the 2.5-day sprint arrived, I knew I wanted to take on this challenge even though I had never used React-Native or any other mobile frameworks.
+When the 4-day sprint arrived, I knew I wanted to take on this challenge even though I had never used React-Native or any other mobile frameworks.
 
 By the end of this project I developed a huge appreciation for mobile developers as well as a new-found passion for mobile development that has driven me to create more React-Native apps as well as learn Dart and Flutter!
 <br>
